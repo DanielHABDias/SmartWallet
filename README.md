@@ -57,13 +57,15 @@ O projeto demonstra o uso de:
 
 | Camada / Função                 | Tecnologia e Propósito                                         |
 |---------------------------------|---------------------------------------------------------------|
-| Front-end                       | **Next.js + TypeScript + Tailwind CSS** → dashboard, gráficos e formulários |
+| Front-end                       | **Next.js + TypeScript + MUI + Tailwind CSS** → dashboard, gráficos e formulários |
 | Auth Service                     | **Spring Boot + JWT** → registro/login, roles, refresh token |
-| Backend CRUD                     | **NestJS + TypeORM** → gerenciamento de dados principais     |
+| Transactions Service             | **NestJS + TypeORM** → gerenciamento de dados principais     |
+| Notifications Service            | **Python** → envio de notificações para clientes     |
+| Analytics Service                | **Python** → analise de dados utilizando IA    |
 | Banco relacional                 | **PostgreSQL** → contas, transações, metas                  |
 | Banco não relacional             | **MongoDB** → logs, histórico de alterações, cache          |
-| Mensageria                       | **RabbitMQ ou Kafka** → filas para eventos assíncronos      |
-| Worker assíncrono                | **Golang** → consome fila, processa alertas e notificações |
+| Mensageria                       | **RabbitMQ** → filas para eventos assíncronos      |
+| Gateway                          | **Golang** → gerência requisições para os serviços e gerência filas |
 | Contêinerização                  | **Docker + Docker Compose** → deploy padronizado de todos os serviços |
 
 ---
@@ -72,42 +74,100 @@ O projeto demonstra o uso de:
 
 ```plaintext
 SmartWallet/
-├─ frontend/ (Next.js)
-│  ├─ pages/
-│  ├─ components/
-│  ├─ services/ (API calls: Auth + Backend NestJS)
-│  └─ styles/
-├─ auth-service/ (Spring Boot)
-│  ├─ controllers/
-│  ├─ services/
-│  ├─ dtos/
-│  ├─ models/
-│  └─ config/ (JWT, Security)
-├─ api-backend/ (NestJS)
-│  ├─ modules/
-│  │  ├─ user/
-│  │  ├─ account/
-│  │  ├─ transaction/
-│  │  ├─ category/
-│  │  └─ goal/
-│  ├─ common/
-│  └─ main.ts
-├─ golang-worker/
-│  ├─ cmd/
-│  └─ internal/
-├─ docker-compose.yml
-└─ README.md
+│
+├── Backend
+|   ├── gateway/
+|   │   ├── main.go
+|   │   ├── go.mod
+|   │   ├── internal/
+|   │   │   ├── router.go
+|   │   │   ├── proxy.go
+|   │   │   ├── queue.go
+|   │   │   └── config.go
+|   │   ├── Dockerfile
+|   │   └── .env
+|   │
+|   ├── services/
+|   │   ├── auth-service/            # Spring Boot
+|   │   ├── transactions-service/    # NestJS
+|   │   ├── notifications-service/   # Python (envia notificações via email) 
+|   │   └── analytics-service/       # Python (com inteligência artificial)   
+|   |
+|   └── infra/
+|       └── docker-compose.yml       # unificado: gateway + services + db + mq
+|
+├── frontend/
+│   ├── app/                      
+│   │   ├── layout.tsx
+│   │   ├── page.tsx
+│   │   ├── dashboard/
+│   │   │   └──  page.tsx
+│   │   ├── settings/
+│   │   │   └── page.tsx
+│   │   ├── login/
+│   │   │   └── page.tsx
+│   │   └── api/                 
+│   │       ├── auth/
+│   │       │   └── route.ts
+│   │       ├── transactions/
+│   │       |   └── route.ts
+│   │       ├── notifications/
+│   │       |   └── route.ts
+│   │       └── analytics/
+│   │           └── route.ts
+│   │
+│   ├── src/
+│   │   ├── assets/              # Ícones, imagens, fontes
+│   │   ├── styles/              # Estilos globais (Tailwind, variáveis, etc.)
+│   │   ├── lib/                 # Configs auxiliares (axios, jwt, etc.)
+│   │   ├── utils/               # Funções utilitárias e helpers
+│   │   ├── context/             # Contextos globais (AuthContext, ThemeContext)
+│   │   ├── hooks/               # Hooks globais (useAuth, useFetch, etc.)
+│   │   └── components/          # Atomic Design
+│   │       ├── atoms/           # Elementos básicos: botões, inputs, ícones
+│   │       ├── molecules/       # Combinações simples: card, input-group
+│   │       └── organisms/       # Seções completas: navbar, sidebar, forms
+│   │
+│   ├── public/                  # Arquivos públicos (favicon, imagens estáticas)
+│   ├── .env.local               # Variáveis de ambiente (NEXT_PUBLIC_API_URL, etc.)
+│   ├── tailwind.config.ts
+│   ├── next.config.ts
+│   ├── tsconfig.json
+│   └── package.json
+|
+└── README.md
 ```
 ---
 
-🔄 **Fluxo do sistema**
+# 🔄 Fluxo do Sistema SmartWallet
 
-1. **Autenticação:** Usuário envia login/register → **Spring Boot Auth Service** gera **JWT**
-2. **Front-end:** Armazena **JWT** e envia requisições autenticadas para **NestJS backend**
-3. **CRUD NestJS:** Processa **contas, transações, categorias e metas** → **PostgreSQL**
-4. **Logs e histórico:** Dados auxiliares armazenados em **MongoDB**
-5. **Mensageria:** Eventos críticos (ex.: **transação criada**, **meta atingida**) enviados para **RabbitMQ/Kafka**
-6. **Worker Golang:** Consome eventos da fila e envia **alertas/e-mails** assíncronos
+## 📘 Visão Geral
+
+O **SmartWallet** segue uma arquitetura baseada em **microserviços** com um **gateway em Go** centralizando as requisições.  
+Cada serviço é responsável por uma parte específica da aplicação, mantendo o sistema modular e fácil de escalar.
+
+---
+
+## ⚙️ Fluxo do BackEnd
+
+1. **Front-end → Gateway (Go):**  
+   O cliente faz requisições HTTP para o **gateway**, que identifica o destino e encaminha para o microserviço correto.
+
+2. **Gateway → Microserviços:**  
+   - Requisições comuns são **encaminhadas diretamente** (ex: login, listar transações).  
+   - Requisições críticas podem ser **enfileiradas no RabbitMQ** antes de chegar ao serviço.
+
+3. **Auth Service (Spring Boot):**  
+   Gerencia **registro, login e autenticação JWT**.
+
+4. **Transactions Service (NestJS):**  
+   Cuida de **transações, contas, metas e categorias**, usando **PostgreSQL**.
+
+5. **Notifications Service (Python):**  
+   Escuta filas do **RabbitMQ** e envia **notificações simples** (como e-mails ou logs).
+
+6. **Analytics Service (Python):**  
+   Consome eventos da fila para gerar **relatórios ou métricas básicas**, armazenando no **MongoDB**.
 
 ---
 
@@ -125,7 +185,7 @@ docker-compose up
 ./mvnw spring-boot:run       # Spring Boot Auth Service
 npm run start:dev            # NestJS backend
 npm run dev                  # Next.js frontend
-go run ./cmd/worker/main.go  # Golang Worker
+go run ./gateway/main.go     # Golang Worker
 ```
 Acesse o frontend em http://localhost:3000
 
