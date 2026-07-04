@@ -1,12 +1,20 @@
 package com.danieldias.smart_wallet;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration;
 
-@SpringBootApplication(exclude=DataSourceAutoConfiguration.class)
+@SpringBootApplication()
 public class SmartWalletApplication {
 	static void main(String[] args) {
+		Dotenv dotenv = Dotenv.configure()
+				.directory(System.getProperty("user.dir"))
+				.load();
+
+		dotenv.entries().forEach(entry ->
+				System.setProperty(entry.getKey(), entry.getValue())
+		);
+
 		SpringApplication.run(SmartWalletApplication.class, args);
 	}
 }
