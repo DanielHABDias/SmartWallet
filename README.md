@@ -22,7 +22,8 @@
 
 - GitHub: [https://github.com/DanielHABDias](https://github.com/DanielHABDias)  
 - LinkedIn: [https://www.linkedin.com/in/danieldias/](https://www.linkedin.com/in/danieldias/)  
-- Portfolio: [https://www.danielhabdias.vercel.app/](https://www.danielhabdias.vercel.app/)  
+- Portfolio: [https://www.danielhabdias.vercel.app/](https://www.danielhabdias.vercel.app/)
+- Email Suporte: smartwallet.danielhabdias@gmail.com
 
 ---
 
