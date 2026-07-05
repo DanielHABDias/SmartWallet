@@ -1,4 +1,4 @@
-package com.danieldias.smart_wallet.domain;
+package com.danieldias.smart_wallet.domain.entity;
 
 import jakarta.persistence.*;
 

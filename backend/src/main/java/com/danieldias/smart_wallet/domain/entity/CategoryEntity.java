@@ -1,9 +1,17 @@
-package com.danieldias.smart_wallet.domain;
+package com.danieldias.smart_wallet.domain.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Entity
 @Table(name="categories")
+@Service
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class CategoryEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
