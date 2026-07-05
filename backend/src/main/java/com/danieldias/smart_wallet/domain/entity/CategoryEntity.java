@@ -3,12 +3,14 @@ package com.danieldias.smart_wallet.domain.entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Entity
 @Table(name="categories")
 @Service
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

@@ -1,3 +1,5 @@
 package com.danieldias.smart_wallet.dto;
 
-public record GetTransactionsDTO(Long userId) {}
+import java.util.Optional;
+
+public record GetTransactionsDTO(Long userId, Optional<Long> transactionId) {}

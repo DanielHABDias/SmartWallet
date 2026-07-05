@@ -28,8 +28,11 @@ public class CategoryController {
     }
 
     @GetMapping("/{categoryId}")
-    public CategoryEntity getCategory(@PathVariable Long categoryId){
-        return this.categoryService.getCategory(categoryId);
+    public ResponseEntity<ApiResponseDTO<CategoryEntity>> getCategory(@PathVariable Long categoryId){
+        CategoryEntity category = this.categoryService.getCategory(categoryId);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new ApiResponseDTO<CategoryEntity>(true, "Category found!", category));
     }
 
     @PostMapping("/create")

@@ -4,6 +4,7 @@ import com.danieldias.smart_wallet.dto.ApiResponseDTO;
 import com.danieldias.smart_wallet.exception.custom.CategoryNotFoundException;
 import com.danieldias.smart_wallet.exception.custom.DatabaseCreateException;
 import com.danieldias.smart_wallet.exception.custom.TransactionNotFoundException;
+import com.danieldias.smart_wallet.exception.custom.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -21,7 +22,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({
             CategoryNotFoundException.class,
-            TransactionNotFoundException.class
+            TransactionNotFoundException.class,
+            UserNotFoundException.class
     })
     public ResponseEntity<ApiResponseDTO<Void>> handleNotFound(RuntimeException ex) {
         return ResponseEntity

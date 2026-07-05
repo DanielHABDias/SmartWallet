@@ -1,9 +1,17 @@
 package com.danieldias.smart_wallet.domain.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity()
 @Table(name="users")
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class UserEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
