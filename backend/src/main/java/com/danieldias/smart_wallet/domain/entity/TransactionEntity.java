@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Builder
 public class TransactionEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long transactionId;
 
     @Column(nullable = false)

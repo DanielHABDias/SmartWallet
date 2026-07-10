@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 @Builder
 public class CategoryEntity extends BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long categoryId;
 
     @Column(nullable = false, unique = true)

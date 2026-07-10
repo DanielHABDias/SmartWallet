@@ -18,7 +18,7 @@ import java.util.List;
 @EqualsAndHashCode(of = "userId", callSuper = false)
 public class UserEntity extends BaseEntity implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
     @Column(unique = true, nullable = false)
@@ -36,6 +36,13 @@ public class UserEntity extends BaseEntity implements UserDetails {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private UserRole role;
+
+    public UserEntity(String login, String password, String email) {
+        this.login = login;
+        this.password = password;
+        this.email = email;
+        this.role = UserRole.USER;
+    }
 
     @Override
     public @NonNull Collection<? extends GrantedAuthority> getAuthorities() {
