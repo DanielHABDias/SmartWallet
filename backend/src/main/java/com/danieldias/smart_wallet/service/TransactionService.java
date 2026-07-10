@@ -27,9 +27,9 @@ public class TransactionService {
     public List<TransactionEntity> getTransactions(GetTransactionsDTO params){
         List<TransactionEntity> transactionList;
         if(params.transactionId().isPresent()){
-            transactionList = this.transactionRepository.findByUserIdAndCategoryId(params.userId(), params.transactionId().get());
+            transactionList = this.transactionRepository.findByUserUserIdAndCategoryCategoryId(params.userId(), params.transactionId().get());
         } else {
-            transactionList = this.transactionRepository.findByUserId(params.userId());
+            transactionList = this.transactionRepository.findByUserUserId(params.userId());
         }
         if(transactionList.isEmpty()){
             throw new TransactionNotFoundException("Transaction not found.");
