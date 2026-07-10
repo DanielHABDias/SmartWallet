@@ -34,10 +34,10 @@ public class SecurityConfigurations  {
                         .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
                         // Category
                         .requestMatchers(HttpMethod.GET, "/category/**").hasRole("USER")
-                        .requestMatchers(HttpMethod.POST, "/category/**").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST, "/category/**").hasRole("ADMIN")
                         // User
-                        .requestMatchers(HttpMethod.GET, "/user/**").hasRole("USER")
-                        .requestMatchers(HttpMethod.POST, "/user/**").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/user/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/user/**").hasRole("ADMIN")
                         // Transaction
                         .requestMatchers(HttpMethod.GET, "/transaction/**").hasRole("USER")
                         .requestMatchers(HttpMethod.POST, "/transaction/**").hasRole("USER")
