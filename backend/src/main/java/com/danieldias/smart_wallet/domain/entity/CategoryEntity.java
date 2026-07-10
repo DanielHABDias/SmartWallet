@@ -20,11 +20,18 @@ public class CategoryEntity extends BaseEntity {
     private Long categoryId;
 
     @Column(nullable = false, unique = true)
-    private String description;
+    private String name;
 
     @Column(nullable = false, unique = true)
     private String color;
 
     @Column(nullable = false, unique = true)
     private String unicodeIcon;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private TransactionType transactionType;
+
+    @Column(nullable = false, length = 100)
+    private String description;
 }

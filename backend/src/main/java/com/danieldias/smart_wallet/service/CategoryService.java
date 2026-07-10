@@ -30,12 +30,31 @@ public class CategoryService {
     public CategoryEntity createCategory(CreateCategoryDTO params) {
         try{
             CategoryEntity category = CategoryEntity.builder()
-                    .description(params.description().toUpperCase())
-                    .color(params.color())
-                    .unicodeIcon(params.unicodeIcon())
+                    .name(params.name().toUpperCase().replace(" ", "_").trim())
+                    .color(params.color().toUpperCase().trim())
+                    .unicodeIcon(params.unicodeIcon().toUpperCase().trim())
+                    .transactionType(params.transactionType())
+                    .description(params.description().trim())
                     .build();
 
             return this.repository.save(category);
+        } catch (Exception e) {
+            throw new DatabaseCreateException("Error creating category in database");
+        }
+    }
+
+    public List<CategoryEntity> createCategories(List<CreateCategoryDTO> params) {
+        try{
+            List<CategoryEntity> entities = params.stream()
+                    .map(dto -> CategoryEntity.builder()
+                            .name(dto.name().toUpperCase().replace(" ", "_").trim())
+                            .color(dto.color().toUpperCase().trim())
+                            .unicodeIcon(dto.unicodeIcon().toUpperCase().trim())
+                            .transactionType(dto.transactionType())
+                            .description(dto.description().trim())
+                            .build())
+                    .toList();
+            return this.repository.saveAll(entities);
         } catch (Exception e) {
             throw new DatabaseCreateException("Error creating category in database");
         }

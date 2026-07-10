@@ -42,4 +42,12 @@ public class CategoryController {
                 .status(HttpStatus.CREATED)
                 .body(new ApiResponseDTO<CategoryEntity>(true, "Category created!", result));
     }
+
+    @PostMapping("/create-many")
+    public ResponseEntity<ApiResponseDTO<List<CategoryEntity>>> createCategories(@RequestBody @Valid List<CreateCategoryDTO> categories) {
+        List<CategoryEntity> result = categoryService.createCategories(categories);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(new ApiResponseDTO<>(true, "Categories created!", result));
+    }
 }
