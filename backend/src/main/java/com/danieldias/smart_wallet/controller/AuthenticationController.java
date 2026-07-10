@@ -13,7 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +29,8 @@ public class AuthenticationController {
     private UserRepository userRepository;
     @Autowired
     private TokenService tokenService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @PostMapping("/login")
     public ResponseEntity<ApiResponseDTO<LoginResponseDTO>> login(@RequestBody @Valid AuthenticationDTO data){
@@ -56,7 +58,7 @@ public class AuthenticationController {
                     .body(new ApiResponseDTO<>(false, "Login or Email is already taken!", null));
         }
 
-        String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
+        String encryptedPassword = passwordEncoder.encode(data.password());
         UserEntity user = new UserEntity(data.login(), encryptedPassword, data.email());
 
         try{
@@ -66,7 +68,6 @@ public class AuthenticationController {
                     .status(HttpStatus.BAD_REQUEST)
                     .body(new ApiResponseDTO<>(false, "Error to save user!", null));
         }
-
 
         return ResponseEntity
                 .status(HttpStatus.OK)
