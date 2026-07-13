@@ -90,10 +90,8 @@ const toggleIcon = computed(() => (isOpen.value ? PanelLeftClose : PanelLeftOpen
   text-align: center;
   color: #fff;
   background: linear-gradient(135deg, #3b82f6, #06b6d4);
-  box-shadow: 0 6px 18px rgba(59, 130, 246, 0.35);
+  box-shadow: 0 3px 9px rgba(59, 130, 246, 0.35);
 }
-
-
 
 .toggle {
   flex-shrink: 0;
@@ -148,12 +146,19 @@ nav a {
   gap: 12px;
   padding: 10px 12px;
   border-radius: 10px;
-  color: var(--sb-text);
+  color: var(--color-text-secondary);
   text-decoration: none;
   font-size: 14px;
   font-weight: 500;
   position: relative;
-  transition: background 0.2s ease, color 0.2s ease;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+nav a:hover {
+  color: var(--color-text-primary);
+  background: var(--color-surface-secondary);
 }
 
 nav a::before {
@@ -165,19 +170,18 @@ nav a::before {
   height: 60%;
   width: 3px;
   border-radius: 2px;
-  background: var(--sb-accent);
+  background: var(--color-primary);
   opacity: 0;
   transition: opacity 0.2s ease;
 }
 
-nav a:hover {
-  color: var(--sb-text-active);
-  background: rgba(255, 255, 255, 0.05);
-}
-
 nav a.active {
-  color: var(--sb-text-active);
-  background: var(--sb-accent-soft);
+  color: var(--color-primary);
+  background: color-mix(
+    in srgb,
+    var(--color-primary) 12%,
+    transparent
+  );
 }
 
 nav a.active::before {
@@ -219,6 +223,10 @@ nav a.active::before {
 
   .sidebar__top {
     padding: 16px 14px;
+  }
+
+  .toggle_icon {
+    box-shadow: 0 6px 18px rgba(59, 130, 246, 0.35);
   }
 
   nav {
