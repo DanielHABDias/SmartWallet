@@ -1,3 +1,22 @@
+<script setup lang="ts">
+import Form from '@/components/molecules/Form.vue';
+</script>
+
 <template>
-    <h1>LOGIN</h1>
+    <Form
+        title="Cadastro"
+        :list-fields="[
+            {
+                name: 'email',
+                label: 'E-mail',
+                type: 'email',
+                placeholder: 'Digite seu e-mail'
+            },
+            {
+                name: 'password',
+                label: 'Senha',
+                type: 'password'
+            }
+        ]"
+    />
 </template>
