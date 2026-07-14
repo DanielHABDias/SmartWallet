@@ -12,17 +12,21 @@ import {
 } from 'lucide-vue-next'
 
 const isOpen = ref(false)
-const activeLabel = ref('Visão Geral')
+const activeLabel = ref('Overview')
 
 const navItems = [
-  { label: 'Visão Geral', icon: LayoutDashboard },
-  { label: 'Transações', icon: ArrowLeftRight },
-  { label: 'Análises', icon: ChartColumn },
-  { label: 'Categorias', icon: Tags },
-  { label: 'Configurações', icon: Settings },
+  { label: 'Overview', icon: LayoutDashboard },
+  { label: 'Transactions', icon: ArrowLeftRight },
+  { label: 'Analytics', icon: ChartColumn },
+  { label: 'Categories', icon: Tags },
+  { label: 'Configurations', icon: Settings },
 ]
 
-const toggleIcon = computed(() => (isOpen.value ? PanelLeftClose : PanelLeftOpen))
+import iconBrand from '@/assets/images/icone_smartwallet.png';
+
+const emit = defineEmits<{
+  (e: 'update:activeLabel', label: string): void
+}>()
 </script>
 
 <template>
@@ -34,7 +38,7 @@ const toggleIcon = computed(() => (isOpen.value ? PanelLeftClose : PanelLeftOpen
         :aria-label="isOpen ? 'Recolher menu' : 'Expandir menu'"
         @click="isOpen = !isOpen"
       >
-        <component :is="toggleIcon" :size="18"  class="toggle_icon"/>
+        <img :src="iconBrand" alt="Logo" class="toggle_icon"/>
       </button>
       <TextBrand class="brand"/>
     </div>
@@ -45,7 +49,7 @@ const toggleIcon = computed(() => (isOpen.value ? PanelLeftClose : PanelLeftOpen
         :key="item.label"
         href="#"
         :class="{ active: activeLabel === item.label }"
-        @click.prevent="activeLabel = item.label"
+        @click.prevent="activeLabel = item.label; emit('update:activeLabel', item.label)"
       >
         <span class="icon-slot">
           <component :is="item.icon" :size="20" />
