@@ -14,6 +14,7 @@
     <div class="dashboard">
         <Aside @update:activeLabel="activeComponent = $event"/>
         <div class="content">
+            <h1>{{ activeComponent }}</h1>
             <Analytics v-if="activeComponent === 'Analytics'" />
             <Transactions v-else-if="activeComponent === 'Transactions'" />
             <Categories v-else-if="activeComponent === 'Categories'" />
@@ -27,10 +28,21 @@
     .dashboard {
         display: flex;
         flex-direction: column;
-        flex-wrap: wrap;
+        flex-wrap: wrap;    
         height: 100vh;
-    }    
+        width: 100%;
+    }
 
+    .dashboard h1 {
+        font-weight: bold;
+        padding-bottom: 1rem;
+    }
+
+    .content {
+        flex: 1;
+        overflow: auto;
+    }
+    
     @media screen and (min-width: 1024px) {
         .dashboard {
             display: flex;
@@ -39,6 +51,7 @@
 
         .content {
             padding: 1rem;
+            flex: 1;
         }
     }
 </style>
