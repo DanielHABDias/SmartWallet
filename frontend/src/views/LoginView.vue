@@ -32,7 +32,7 @@ const listFields = ref([
 
 <template>
     <div class="auth">
-        <TextBrand fontSize="50px" />
+        <TextBrand fontSize="2.5rem" />
         <Transition name="fade-slide" mode="out-in">
             <!-- REGISTER -->
             <div v-if="showRegister" key="register" class="register-container">
@@ -42,6 +42,9 @@ const listFields = ref([
                         :list-fields="listFields"
                     />
                 </div>
+                <button class="toggle-btn mobile-toggle-btn" @click="showRegister = false">
+                    Já tem conta? Entrar →
+                </button>
                 <div class="divider"></div>
                 <div class="image-section">
                     <div class="image">
@@ -70,6 +73,9 @@ const listFields = ref([
                         :list-fields="listFields.slice(1, 3)"
                     />
                 </div>
+                <button class="toggle-btn mobile-toggle-btn" @click="showRegister = true">
+                    ← Criar nova conta
+                </button>
             </div>
         </Transition>
     </div>
@@ -78,23 +84,27 @@ const listFields = ref([
 <style scoped>
     .auth {
         width: 100%;
-        height: 100vh;
+        height: auto;
+        min-height: 100vh;
         margin: 0;
-        padding: 0;
+        padding: 20px 0;
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        gap: 0px;
+        gap: 20px;
+        overflow-x: hidden;
     }
 
     .register-container,
     .login-container {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
-        gap: 40px;
+        gap: 0;
+        width: 100%;
+        box-sizing: border-box;
     }
 
     .register,
@@ -102,22 +112,19 @@ const listFields = ref([
         display: flex;
         justify-content: center;
         align-items: center;
-        min-width: 550px;
-        min-height: 600px;
+        width: 100%;
+        max-width: 100%;
+        min-height: auto;
+        padding: 0 20px;
+        box-sizing: border-box;
     }
 
     .divider {
-        width: 1px;
-        height: 400px;
-        background-color: #ccc;
+        display: none;
     }
 
     .image-section {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 30px;
+        display: none;
     }
 
     .image img {
@@ -147,6 +154,14 @@ const listFields = ref([
         transform: translateY(0);
     }
 
+    .mobile-toggle-btn {
+        display: block;
+        width: calc(100% - 40px);
+        margin: 20px 20px 0 20px;
+        padding: 14px 20px;
+        font-size: 14px;
+    }
+
     /* Animações de transição */
     .fade-slide-enter-active,
     .fade-slide-leave-active {
@@ -161,5 +176,46 @@ const listFields = ref([
     .fade-slide-leave-to {
         opacity: 0;
         transform: translateX(-30px);
+    }
+
+    @media screen and (min-width: 1024px) {
+        .auth {
+            height: 100vh;
+            padding: 0;
+            gap: 0px;
+        }
+
+        .register-container,
+        .login-container {
+            flex-direction: row;
+            gap: 40px;
+        }
+
+        .register,
+        .login {
+            min-width: 550px;
+            min-height: 600px;
+            width: auto;
+            padding: 0;
+        }
+
+        .divider {
+            display: block;
+            width: 1px;
+            height: 400px;
+            background-color: #ccc;
+        }
+
+        .image-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .mobile-toggle-btn {
+            display: none;
+        }
     }
 </style>
