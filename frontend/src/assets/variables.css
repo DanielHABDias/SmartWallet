@@ -73,6 +73,21 @@
 
   --table-radius: 12px;
 
+  /* Table */
+  --table-header-bg: #008B8B;
+  --table-header-text: #ffffff;
+  --table-row-bg: #ffffff;
+  --table-row-hover: #f1f5f9;
+  --table-border: rgba(15, 23, 42, 0.08);
+  --table-shadow: 0 2px 8px rgba(37, 99, 235, 0.1);
+
+  /* Charts */
+  --chart-line-color: #2563eb;
+  --chart-area-color: rgba(37, 99, 235, 0.1);
+  --chart-pie-colors: #2563eb, #06b6d4, #f59e0b, #ec4899, #8b5cf6, #06b6d4, #14b8a6, #f43f5e;
+  --chart-text-color: #0f172a;
+  --chart-grid-color: rgba(15, 23, 42, 0.08);
+
 
   /*
    * Spacing
@@ -177,4 +192,19 @@
 
   --shadow-large:
     0 30px 60px rgba(0,0,0,.55);
+
+  /* Table */
+  --table-header-bg: #3b82f6;
+  --table-header-text: #ffffff;
+  --table-row-bg: #0f172a;
+  --table-row-hover: #1e293b;
+  --table-border: rgba(255, 255, 255, 0.1);
+  --table-shadow: 0 2px 8px rgba(96, 165, 250, 0.15);
+
+  /* Charts */
+  --chart-line-color: #60a5fa;
+  --chart-area-color: rgba(96, 165, 250, 0.1);
+  --chart-pie-colors: #60a5fa, #22d3ee, #f59e0b, #ec4899, #a78bfa, #06b6d4, #14b8a6, #fb7185;
+  --chart-text-color: #f8fafc;
+  --chart-grid-color: rgba(255, 255, 255, 0.1);
 }
