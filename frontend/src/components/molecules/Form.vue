@@ -7,6 +7,7 @@ type Field = {
   label: string
   type: string
   placeholder?: string
+  required?: boolean
 }
 
 const props = defineProps<{
@@ -42,6 +43,7 @@ function submit() {
       :label="field.label"
       :type="field.type"
       :placeholder="field.placeholder"
+      :required="field.required"
     />
 
     <button type="submit">
@@ -164,7 +166,7 @@ button:focus-visible {
 
 @media screen and (min-width: 1240px) {
   form {
-    width: min(100%, 420px);
+    width: min(100%, 550px);
     padding: var(--space-xl);
   }
   h2 {

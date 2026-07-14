@@ -6,6 +6,7 @@ defineProps<{
   placeholder?: string
   modelValue?: string
   disabled?: boolean
+  required?: boolean
   error?: string
 }>()
 
@@ -26,6 +27,7 @@ const emit = defineEmits<{
             :placeholder="placeholder"
             :value="modelValue"
             :disabled="disabled"
+            :required="required"
             @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)"
         />
 
