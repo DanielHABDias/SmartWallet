@@ -2,7 +2,9 @@
 import TextBrand from '@/components/atoms/TextBrand.vue';
 import Form from '@/components/molecules/Form.vue';
 import { ref } from 'vue';
+import { useAuth } from '@/stores/useAuth';
 
+const auth = useAuth();
 const showRegister = ref(true);
 
 const listFields = ref([
@@ -40,6 +42,7 @@ const listFields = ref([
                     <Form
                         title="Cadastrar"
                         :list-fields="listFields"
+                        @submit="(data) => auth.register(data.name!, data.email!, data.password!)"
                     />
                 </div>
                 <button class="toggle-btn mobile-toggle-btn" @click="showRegister = false">
@@ -71,6 +74,7 @@ const listFields = ref([
                     <Form
                         title="Entrar"
                         :list-fields="listFields.slice(1, 3)"
+                        @submit="(data) => auth.login(data.email!, data.password!)"
                     />
                 </div>
                 <button class="toggle-btn mobile-toggle-btn" @click="showRegister = true">
